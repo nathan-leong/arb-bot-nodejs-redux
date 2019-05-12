@@ -4,12 +4,25 @@
   "description": "",
   "main": "btc.js",
   "dependencies": {
+    "axios": "^0.18.0",
+    "node-fetch": "^2.5.0",
     "nodemon": "^1.19.0",
+    "react-redux": "^7.0.3",
+    "redux": "^4.0.1",
+    "request": "^2.88.0",
     "ws": "^7.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/register": "^7.4.4",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel --presets es2015 -d lib/ src",
+    "start": "npm run build && nodemon lib/start"
   },
   "author": "",
   "license": "ISC"
