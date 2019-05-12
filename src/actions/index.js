@@ -1,15 +1,13 @@
-export const receivedBtcPrice = price => {
-    console.log('actioned price ', price)
+export const receivedBtcPrice = (coin,price) => {
     return {
         type: 'BTC_UPDATE',
-        payload: price
+        payload: {coin,price}
     }
 }
 
-export const receivedBfxPrice = price => {
-    console.log('actioned price ', price)
+export const receivedBfxPrice = (coin, price) => {
     return {
         type: 'BFX_UPDATE',
-        payload: price
+        payload: {coin,price}
     }
 }

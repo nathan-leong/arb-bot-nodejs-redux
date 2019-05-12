@@ -1,11 +1,11 @@
 const initialState = {
-    btcprice:null
-  };
+    BTC: {price: null, vol: null}
+};
 
 export default function(state=initialState, action) {
     switch (action.type){
         case 'BTC_UPDATE':
-            state.btcprice = action.payload;
+            state[action.payload.coin] = action.payload.price;
             break
     }
     return state;

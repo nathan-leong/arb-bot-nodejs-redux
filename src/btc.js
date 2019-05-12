@@ -1,6 +1,7 @@
 import WebSocket from 'ws'
 import {store} from './start'
 import {receivedBtcPrice} from './actions/index'
+import {xRateCalculator} from './utils/utils'
 const ws = new WebSocket('wss://socket.btcmarkets.net/v2');
 
 const marketIds = ['BTC-AUD']
@@ -17,10 +18,21 @@ ws.onopen = () => {
 
 ws.onmessage = (msg) => {
     msg = JSON.parse(msg.data)
-    console.log('msg',msg.bids[0]);
-    store.dispatch(receivedBtcPrice(msg.bids[0]))
-    console.log('store state ',store.getState());
-
+    const bid = {
+        price: msg.bids[0][0],
+        vol: msg.bids[0][1]
+    }
+    const ask = {
+        price: msg.asks[0][0],
+        vol: msg.asks[0][1]
+    }
+    const price = {
+        bid,
+        ask
+    }
+    store.dispatch(receivedBtcPrice('BTC',price))
+    console.log('BTCmarkets store state ',store.getState().btcPrice);
+    xRateCalculator('BTC')
 };
 
 export default ws;

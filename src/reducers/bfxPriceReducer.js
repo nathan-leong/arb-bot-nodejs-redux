@@ -1,11 +1,11 @@
 const initialState = {
-    bfxprice:null
+    BTC: {price: null, vol: null}
   };
 
 export default function(state=initialState, action) {
     switch (action.type){
         case 'BFX_UPDATE':
-            state.bfxprice = action.payload;
+            state[action.payload.coin] = action.payload.price;
             break
     }
     return state;
