@@ -11,8 +11,8 @@ export const xRateCalculator = (coin) => {
         const bfxBidPrice = bfxPrice[coin].bid.price
         const bfxAskPrice = bfxPrice[coin].ask.price
     
-        const btcToBfxRate = parseFloat(bfxAskPrice)/parseFloat(btcBidPrice)
-        const bfxToBtcRate = parseFloat(bfxBidPrice)/parseFloat(btcAskPrice)
+        const btcToBfxRate = bfxAskPrice/btcBidPrice
+        const bfxToBtcRate = bfxBidPrice/btcAskPrice
 
         console.log(`BTC => BFX for coin ${coin}`, btcToBfxRate)
         console.log(`BFX => BTC for coin ${coin}`, bfxToBtcRate)

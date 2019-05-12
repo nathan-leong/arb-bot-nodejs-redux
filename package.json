@@ -22,7 +22,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel --presets es2015 -d lib/ src",
-    "start": "npm run build && nodemon lib/start"
+    "start": "npm run build && nodemon lib/start --exec babel-node --presets=es2015"
   },
   "author": "",
   "license": "ISC"

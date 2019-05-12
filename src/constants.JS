@@ -1,6 +1,5 @@
 const CONSTANTS = {
-    BTC_URL: 'https://api.btcmarkets.net',
-    BTC_TICKER_URI: '/market/BTC/AUD/tick'
+    COINS: ['BTC','ETH','XRP'],
 }
 
 module.exports = CONSTANTS;

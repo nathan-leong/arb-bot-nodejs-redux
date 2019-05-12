@@ -1,7 +1,10 @@
-const initialState = {
-    BTC: {price: null, vol: null}
-  };
+import CONSTANTS from '../constants'
 
+const initialState = {};
+
+CONSTANTS.COINS.forEach(coin => {
+    initialState[coin] = {price: null, vol: null}
+})
 export default function(state=initialState, action) {
     switch (action.type){
         case 'BFX_UPDATE':

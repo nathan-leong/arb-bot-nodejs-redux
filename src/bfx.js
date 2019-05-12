@@ -2,10 +2,17 @@ const WebSocket = require('ws')
 import {store} from './start'
 import {receivedBfxPrice} from './actions/index'
 import {xRateCalculator} from './utils/utils'
+import CONSTANTS from './constants'
 
 const ws = new WebSocket('wss://api.bitfinex.com/ws/')
 
-const pairs = ['BTCUSD']
+const channels = {}
+let pairs = []
+CONSTANTS.COINS.forEach(coin => {
+    channels[coin] = null
+    pairs.push(`${coin}USD`)
+})
+
 var request = {
     pair:'',
     channel: ['ticker'],
@@ -20,8 +27,21 @@ ws.onopen = () => {
 };
 
 ws.onmessage = (msg) => {
-    if (msg.data.match(/\[(.*?)\]/)){
-        const priceInfo = msg.data.match(/\[(.*?)\]/)[1].split(',')
+    const priceInfo = JSON.parse(msg.data)
+    let coinSymbol = '';
+   if (priceInfo.pair) {
+        coinSymbol = priceInfo.pair.match(/.+?(?=USD)/)
+        if (!channels[coinSymbol]){
+            channels[coinSymbol] = priceInfo.chanId
+        }
+       
+   }
+    else {
+        for (var key in channels){
+            if (channels[key] == priceInfo[0]){
+                coinSymbol = key
+            }
+        }
         if (priceInfo.length > 2) {
             const bid = {
                 price: priceInfo[1],
@@ -36,9 +56,9 @@ ws.onmessage = (msg) => {
                 ask
             }
             console.log('bid',bid)
-            store.dispatch(receivedBfxPrice('BTC',price))
+            store.dispatch(receivedBfxPrice(coinSymbol,price))
             console.log('BFX store state ',store.getState().bfxPrice);
-            xRateCalculator('BTC')
+            xRateCalculator(coinSymbol)
 
         }
     }
