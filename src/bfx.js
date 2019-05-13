@@ -55,9 +55,8 @@ ws.onmessage = (msg) => {
                 bid,
                 ask
             }
-            console.log('bid',bid)
             store.dispatch(receivedBfxPrice(coinSymbol,price))
-            console.log('BFX store state ',store.getState().bfxPrice);
+            //console.log('BFX store state ',store.getState().bfxPrice);
             xRateCalculator(coinSymbol)
 
         }

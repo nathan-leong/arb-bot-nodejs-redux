@@ -1,5 +1,8 @@
 const CONSTANTS = {
-    COINS: ['BTC','ETH','XRP'],
+    COINS: ['LTC','ETH','XRP','ETC'],
+    GAIN_THRESHOLD: -0.3,
+    BTC_TRANSACTION_FEE: 0.008,
+    BFX_TRANSACTION_FEE: 0.001,
 }
 
 module.exports = CONSTANTS;

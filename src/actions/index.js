@@ -11,3 +11,10 @@ export const receivedBfxPrice = (coin, price) => {
         payload: {coin,price}
     }
 }
+
+export const xRatesStore = (btcToBfxXrate, bfxToBtcXrate,coinSymbol) => {
+    return {
+        type: 'XRATE_STORE',
+        payload: {btcToBfxXrate,bfxToBtcXrate, coinSymbol}
+    }
+}

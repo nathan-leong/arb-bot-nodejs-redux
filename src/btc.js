@@ -36,7 +36,7 @@ ws.onmessage = (msg) => {
         ask
     }
     store.dispatch(receivedBtcPrice(coinSymbol,price))
-    console.log('BTCmarkets store state ',store.getState().btcPrice);
+    //console.log('BTCmarkets store state ',store.getState().btcPrice);
     xRateCalculator(coinSymbol)
 };
 
