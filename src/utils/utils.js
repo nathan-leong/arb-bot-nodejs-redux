@@ -2,15 +2,24 @@ import {store} from '../start'
 import {xRatesStore} from '../actions'
 import CONSTANTS from '../constants'
 
+export const heartbeat = () => {
+
+    console.log(new Date())
+    //console.log('BTCmarkets store state ',store.getState().btcPrice);
+    //console.log('BFXmarkets store state ',store.getState().bfxPrice);
+    console.log('XRATES store state ',store.getState().xRates);
+    
+}
+
 export const xRateCalculator = (coin) => {
     const {btcPrice, bfxPrice} = store.getState()
-    if(btcPrice[coin].bid && bfxPrice[coin].bid) {
+    if(btcPrice.prices[coin].bid && bfxPrice.prices[coin].bid) {
 
-        const btcBidPrice = btcPrice[coin].bid.price
-        const btcAskPrice = btcPrice[coin].ask.price
+        const btcBidPrice = btcPrice.prices[coin].bid.price
+        const btcAskPrice = btcPrice.prices[coin].ask.price
     
-        const bfxBidPrice = bfxPrice[coin].bid.price
-        const bfxAskPrice = bfxPrice[coin].ask.price
+        const bfxBidPrice = bfxPrice.prices[coin].bid.price
+        const bfxAskPrice = bfxPrice.prices[coin].ask.price
     
         const btcToBfxRate = bfxAskPrice/btcBidPrice
         const bfxToBtcRate = bfxBidPrice/btcAskPrice
@@ -54,27 +63,27 @@ export const generateMaxGain = () => {
 }
 
 const transaction = (btcCoin,bfxCoin,maxGain) => {
-    let bidPriceInfo = store.getState().btcPrice[btcCoin].bid
+    let bidPriceInfo = store.getState().btcPrice.prices[btcCoin].bid
     let bidPrice = bidPriceInfo.price;
     let bidVol = bidPriceInfo.vol;
-    let askPriceInfo = store.getState().bfxPrice[btcCoin].ask
+    let askPriceInfo = store.getState().bfxPrice.prices[btcCoin].ask
     let askPrice = askPriceInfo.price;
     let askVol = askPriceInfo.vol;
     const maxTransactableBtcToBfx = Math.min(bidPrice*bidVol,askPrice*askVol*(1-CONSTANTS.BTC_TRANSACTION_FEE))
 
     //console.log(`Max transactable for btc => bfx $${maxTransactableBtcToBfx}`)
 
-     bidPriceInfo = store.getState().bfxPrice[bfxCoin].bid
+     bidPriceInfo = store.getState().bfxPrice.prices[bfxCoin].bid
      bidPrice = bidPriceInfo.price;
      bidVol = bidPriceInfo.vol;
-     askPriceInfo = store.getState().btcPrice[bfxCoin].ask
+     askPriceInfo = store.getState().btcPrice.prices[bfxCoin].ask
      askPrice = askPriceInfo.price;
      askVol = askPriceInfo.vol;
     const maxTransactableBfxToBtc = Math.min(bidPrice*bidVol,askPrice*askVol*(1-CONSTANTS.BFX_TRANSACTION_FEE))
 
     //console.log(`Max transactable for bfx => btc $${maxTransactableBfxToBtc}`)
     const maxTransactable = Math.min(maxTransactableBfxToBtc,maxTransactableBtcToBfx)
-    if(100*maxGain > 0.5){
+    if(100*maxGain > -0.4){
         console.log(new Date())
         console.log(`Max gain = ${100*maxGain}%`)
         console.log(`Max Transactable = $${maxTransactable}`)

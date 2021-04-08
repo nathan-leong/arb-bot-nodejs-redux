@@ -18,3 +18,10 @@ export const xRatesStore = (btcToBfxXrate, bfxToBtcXrate,coinSymbol) => {
         payload: {btcToBfxXrate,bfxToBtcXrate, coinSymbol}
     }
 }
+
+export const storeCoinBalance = (coin, amount, market) => {
+    return {
+        type: `${market}_STORE_BALANCE`,
+        payload: {coin, amount}
+    }
+}
